@@ -1,0 +1,67 @@
+version: '3'
+
+volumes:
+  msa_mysql_data:
+
+services:
+  api-gateway:
+    image: lait-gateway
+    build:
+      context: ./apps/api-gateway
+      dockerfile: dockerfile
+    container_name: lait-gateway
+    depends_on:
+      - user-service
+      - channel-service
+      - live-service
+    volumes:
+      - /tmp/history/npm-cache:/root/.npm:z
+      - ./apps/api-gateway/src:/usr/src/app/src:z
+    ports:
+      - '3000:3000'
+    environment:
+      - PORT=3000
+      - MYSQL_HOST=host.docker.internal
+    restart: 'no'
+
+  user-service:
+    image: user-service
+    build:
+      context: ./apps/user
+      dockerfile: dockerfile
+    container_name: user-service
+    volumes:
+      - /tmp/history/npm-cache:/root/.npm:z
+      - ./apps/user/src:/usr/src/app/src:z
+    environment:
+      - PORT=3001
+      - MYSQL_HOST=host.docker.internal
+    restart: 'no'
+
+  channel-service:
+    image: channel-service
+    build:
+      context: ./apps/channel
+      dockerfile: dockerfile
+    container_name: channel-service
+    volumes:
+      - /tmp/history/npm-cache:/root/.npm:z
+      - ./apps/channel/src:/usr/src/app/src:z
+    environment:
+      - PORT=3002
+      - MYSQL_HOST=host.docker.internal
+    restart: 'no'
+
+  live-service:
+    image: live-service
+    build:
+      context: ./apps/live
+      dockerfile: dockerfile
+    container_name: live-service
+    volumes:
+      - /tmp/history/npm-cache:/root/.npm:z
+      - ./apps/live/src:/usr/src/app/src:z
+    environment:
+      - PORT=3003
+      - MYSQL_HOST=host.docker.internal
+    restart: 'no'
