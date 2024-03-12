@@ -18,9 +18,6 @@ export class Live {
   @Column({type: 'varchar', name: 'hls_url'})
   hlsUrl: string;
 
-  @Column({type: 'boolean', default: true})
-  status: boolean;
-
   @CreateDateColumn({name: 'created_at'})
   createdAt: Date;
 

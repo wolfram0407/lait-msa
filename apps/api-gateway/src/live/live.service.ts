@@ -1,6 +1,6 @@
 import {Inject, Injectable, Logger} from '@nestjs/common';
 import {ClientProxy} from '@nestjs/microservices';
-import {CreateLiveReqDto} from './dto/req.live.dto';
+import {CreateLiveReqDto, UpdateLiveReqDto} from './dto/req.live.dto';
 import {firstValueFrom} from 'rxjs';
 import {ChannelService} from 'src/channel/channel.service';
 
@@ -35,6 +35,14 @@ export class LiveService {
     );
     return lives
   }
+  async getLive(liveId: number) {
+    const pattern = {cmd: 'live_getOne'};
+    const payload = liveId;
+    const live = await firstValueFrom<any>(
+      this.client.send<{}>(pattern, payload),
+    );
+    return live
+  }
 
   async endLive(channelId: number) {
     const pattern = {cmd: 'live_end'};
@@ -45,9 +53,9 @@ export class LiveService {
     return live;
   }
 
-  async updateLive(liveId: number, title: string) {
+  async updateLive(liveId: number, {title, description}: UpdateLiveReqDto) {
     const pattern = {cmd: 'live_update'};
-    const payload = {liveId, title};
+    const payload = {liveId, title, description};
     const live = await firstValueFrom<any>(
       this.client.send<any>(pattern, payload),
     );

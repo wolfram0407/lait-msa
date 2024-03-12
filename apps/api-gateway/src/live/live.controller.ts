@@ -1,5 +1,5 @@
 
-import {Controller, Get, Post, Redirect, Req, UseGuards, Request, Response, Res, Body, Logger, Param, Put, Patch} from '@nestjs/common';
+import {Controller, Get, Post, Delete, Redirect, Req, UseGuards, Request, Response, Res, Body, Logger, Param, Put, Patch} from '@nestjs/common';
 
 import {ApiOperation, ApiTags} from '@nestjs/swagger';
 import {LiveService} from './live.service';
@@ -17,6 +17,7 @@ export class LiveController {
         summary: '라이브 등록',
         description: '라이브 등록',
     })
+
     @Post('create/:channelId')
     async createLive(
         @Body() createLiveReqDto: CreateLiveReqDto,
@@ -32,22 +33,32 @@ export class LiveController {
         return live
     }
 
+    @Get(':liveId')
+    async getLive(
+        @Param('liveId') liveId: string
+    ) {
+        const live = await this.liveService.getLive(+liveId);
+        return live
+    }
 
-    @Put('end/:channelId')
+    @Delete('end/:channelId')
     async endLive(
         @Param('channelId') channelId: string
     ) {
         const live = await this.liveService.endLive(+channelId)
+        if (!live) {
+            return "라이브 없음"
+        }
         return live
     }
-
 
     @Patch(':liveId')
     async updateLive(
         @Param('liveId') liveId: string,
-        @Body() {title}: UpdateLiveReqDto,
+        @Body() updateLiveReqDto: UpdateLiveReqDto,
     ) {
-        const live = await this.liveService.updateLive(+liveId, title);
+        console.log('gateway ' + liveId)
+        const live = await this.liveService.updateLive(+liveId, updateLiveReqDto);
         return live;
     }
 }

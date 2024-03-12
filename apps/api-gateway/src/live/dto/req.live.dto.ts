@@ -22,11 +22,4 @@ export class CreateLiveReqDto {
 }
 
 export class UpdateLiveReqDto extends PartialType(CreateLiveReqDto) {
-  @ApiProperty({
-    example: '[LIVE] 실시간 스트리밍',
-    description: '라이브 제목',
-  })
-  @IsString()
-  @IsOptional()
-  title?: string;
 }

@@ -65,3 +65,17 @@ services:
       - PORT=3003
       - MYSQL_HOST=host.docker.internal
     restart: 'no'
+
+  analytics-service:
+    image: analytics-service
+    build:
+      context: ./apps/video
+      dockerfile: dockerfile
+    container_name: analytics-service
+    volumes:
+      - /tmp/history/npm-cache:/root/.npm:z
+      - ./apps/analytics/src:/usr/src/app/src:z
+    environment:
+      - PORT=3004
+      - MYSQL_HOST=h2ost.docker.internal
+    restart: 'no'

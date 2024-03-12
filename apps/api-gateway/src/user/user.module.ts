@@ -21,4 +21,5 @@ import {ClientProxyFactory, Transport} from '@nestjs/microservices';
     },
   ],
 })
+
 export class UserModule {}

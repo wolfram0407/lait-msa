@@ -19,15 +19,24 @@ export class LiveController {
     return lives
   }
 
-  @MessagePattern({cmd: 'live_end'})
+
+  @MessagePattern({cmd: 'live_getOne'})
+  async getLive(liveId: number) {
+    const lives = await this.liveService.getLive(liveId);
+    return lives
+  }
+
+
+  @MessagePattern({cmd: 'live_endOne'})
   async endLive(channelId: number) {
     const live = await this.liveService.endLive(channelId);
     return live;
   }
 
+
   @MessagePattern({cmd: 'live_update'})
-  async updateLive(liveId: number, title: string) {
-    const live = await this.liveService.updateLive(liveId, title);
+  async updateLive({liveId, title, description}: {liveId: number, title: string, description: string}) {
+    const live = await this.liveService.updateLive(liveId, title, description);
     return live;
   }
 

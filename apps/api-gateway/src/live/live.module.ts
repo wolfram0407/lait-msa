@@ -9,6 +9,7 @@ import {ChannelModule} from 'src/channel/channel.module';
   imports: [
     ChannelModule
   ],
+
   exports: [LiveService],
   controllers: [LiveController],
   providers: [
@@ -27,4 +28,5 @@ import {ChannelModule} from 'src/channel/channel.module';
     },
   ],
 })
+
 export class LiveModule {}
