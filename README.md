@@ -6,6 +6,16 @@
 
 ![image](https://github.com/user-attachments/assets/4f65c428-5565-4db3-abae-e4c257bfb518)
 
+NestJS 마이크로서비스 적용 
+👉모놀리식 => 마이크로서비스 전환
+
+
+TCP를 활용한 동기 통신
+👉마이크로서비스간의 http 동기 통신
+
+
+docker compose를 활용하여 로컬 개발 환경에서 마이크로서비스 구동
+
 
 
 <br>
@@ -13,7 +23,7 @@
  
 ## 🚀 배포 링크
 
-<div>ㅁ
+<div>
     👉 <a href="https://la-it.online/">라잇 <span> https://la-it.online/ </span></a> 
 </div>
 
